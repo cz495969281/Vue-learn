@@ -2,13 +2,12 @@
   <div id="app">
     <div class="layui-container">
       <form class="layui-form layui-form-pane" action="">
-        <div class="layui-form-item" :class="{'form-group-error':$v.name.$error}">
+        <div class="layui-form-item">
           <label class="layui-form-label">用户名</label>
           <div class="layui-input-inline">
-            <input type="text" name="title"  v-model.trim="$v.name.$model"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
+            <input type="text" name="name" v-validate="'required|email'"  v-model.trim="name"  lay-verify="required" placeholder="请输入标题" autocomplete="off" class="layui-input">
           </div>
-          <div class="error" v-if="!$v.name.required">用户名不得为空</div>
-          <div class="error" v-if="!$v.name.email">用户名输入格式错误</div>
+          <div class="error layui-form-mid">{{errors.first('name')}}</div>
         </div>
 
         <div class="layui-form-item">
@@ -34,7 +33,6 @@
 </template>
 <script>
 import axios from 'axios'
-import { required, email } from 'vuelidate/lib/validators'
 export default {
   name: 'app',
   data () {
@@ -44,18 +42,6 @@ export default {
       password: '',
       code: '',
       errorMsg: []
-    }
-  },
-  validations: {
-    name: {
-      required,
-      email
-    },
-    password: {
-      required
-    },
-    code: {
-      required
     }
   },
   mounted () {
@@ -105,7 +91,7 @@ export default {
     }
   }
   .svg{
-    /*position: relative;*/
+    position: relative;
     top: -15px;
   }
 </style>

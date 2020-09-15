@@ -1,12 +1,13 @@
+import VeeValidate, { Validator } from 'vee-validate'
 import Vue from 'vue'
 import App from './App.vue'
 import router from './router'
 import store from './store'
-// import Vuelidate from 'vuelidate'
-// Vue.use(Vuelidate)
+// 第一种方式
+// import zh from 'vee-validate/dist/locale/zh_CN'
 
-import VeeValidate from 'vee-validate'
 Vue.use(VeeValidate)
+Validator.localize('zh-CN', zh)
 Vue.config.productionTip = false
 
 new Vue({
