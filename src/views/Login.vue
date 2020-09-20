@@ -110,10 +110,10 @@ export default {
   methods: {
     _getCode () {
       getCode().then((res) => {
-        console.log('res', res.data)
-        if (res.data.code === 200) {
+        console.log('res', res)
+        if (res.code === 200) {
           console.log('res.data', res.data)
-          this.svg = res.data.data
+          this.svg = res.data
         }
       })
     }
