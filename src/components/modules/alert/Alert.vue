@@ -2,16 +2,25 @@
   <div v-show="isShow">
       <div class="alert">
         <div class="flex">{{ msg }}</div>
-        <div class="btnCommon success" @click="close()">确定</div>
+        <div v-if="type === 'alert'">
+          <div class="btnCommon success" @click="close()">确定</div>
+        </div>
+        <div v-else class="space-round">
+          <div class="btnCommon cancel" @click="cancelEvent()">取消</div>
+          <div class="btnCommon success" @click="successEvent()">确定</div>
+        </div>
       </div>
       <div class="mask" @click="closeMask()"></div>
   </div>
 </template>
-
 <script>
 export default {
   name: 'Alert',
   props: {
+    type: {
+      type: String,
+      default: 'alert'
+    },
     msg: {
       type: String,
       default: ''
@@ -19,6 +28,14 @@ export default {
     isShow: {
       type: Boolean,
       default: false
+    },
+    success: {
+      type: Function,
+      default: () => { console.log('点击了success') }
+    },
+    cancel: {
+      type: Function,
+      default: () => { console.log('点击了cancel') }
     }
   },
   methods: {
@@ -26,6 +43,14 @@ export default {
       this.isShow = false
     },
     closeMask () {
+      this.close()
+    },
+    cancelEvent () {
+      this.cancel()
+      this.close()
+    },
+    successEvent () {
+      this.success()
       this.close()
     }
   }
@@ -58,6 +83,14 @@ export default {
     flex: 1;
     justify-content: center;
     align-items: center;
+  }
+  .space-round{
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    padding: 0 10px;
   }
   .btnCommon{
     width: 105px;

@@ -8,8 +8,21 @@ Alert.install = (Vue) => {
   document.body.appendChild(instance.$el)
 
   Vue.prototype.$alert = (msg) => {
+    instance.type = 'alert'
     instance.msg = msg;
     instance.isShow = true
+  }
+
+  Vue.prototype.$confirm = (msg, success, cancel) => {
+    instance.type = 'confirm'
+    instance.msg = msg
+    instance.isShow = true
+    if (typeof success !== 'undefined') {
+      instance.success = success
+    }
+    if (typeof cancel !== 'undefined') {
+      instance.cancel = cancel
+    }
   }
 }
 export default Alert
