@@ -48,7 +48,7 @@
                   <div class="layui-form-item">
                     <div class="layui-row">
                       <label class="layui-form-label">验证码</label>
-                      <ValidationProvider name="code" rules="required|length:4" v-slot="{errors}">
+                      <ValidationProvider name="code" ref="codefield" rules="required|length:4" v-slot="{errors}">
                         <div class="layui-input-inline">
                           <input
                             type="text"
@@ -56,9 +56,10 @@
                             v-model="code"
                             placeholder="请输入验证码"
                             autocomplete="off"
-                            class="layui-input" />
+                            class="layui-input"
+                          />
                         </div>
-                        <div class="layui-form-mid">
+                        <div>
                           <span class="svg" style="color: #c00;" @click="_getCode()" v-html="svg"></span>
                         </div>
                         <div class="layui-form-mid">
@@ -123,9 +124,9 @@ export default {
     _getCode () {
       const sid = this.$store.state.sid;
       getCode(sid).then((res) => {
-        console.log('res', res)
+        // console.log('res', res)
         if (res.code === 200) {
-          console.log('res.data', res.data)
+          // console.log('res.data', res.data)
           this.svg = res.data
         }
       })
@@ -142,7 +143,20 @@ export default {
         sid: this.$store.state.sid
       }).then((res) => {
         if (res.code === 200) {
-          console.log(res)
+          this.username = '';
+          this.password = '';
+          this.code = ''
+          requestAnimationFrame(() => {
+            this.$refs.observe.reset()
+          })
+        } else if (res.code === 401) {
+          console.log('401----', res)
+          this.$refs.codefield.setErrors([res.msg])
+        }
+      }).catch((err) => {
+        const data = err.response.data;
+        if (data.code === 500) {
+          this.$alert('用户名和密码校验失败')
         }
       })
     }
