@@ -2,7 +2,7 @@ import axios from '../utils/request';
 
 // 获取验证码
 export const getCode = (sid) => {
-  return axios.get('/getCaptcha', {
+  return axios.get('/public/getCaptcha', {
     params: {
       sid: sid
     }

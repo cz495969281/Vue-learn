@@ -1,4 +1,4 @@
-const errorHandle = (err)=> {
+const errorHandle = (err) => {
   console.log(err)
 }
 

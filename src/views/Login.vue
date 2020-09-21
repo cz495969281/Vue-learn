@@ -90,7 +90,7 @@
   </div>
 </template>
 <script>
-import { ValidationProvider, ValidationObserver } from 'vee-validate'
+import { ValidationProvider, ValidationObserver } from 'vee-validate';
 import { getCode, login } from '../api/login'
 import uuid from 'uuid/v4'
 export default {
@@ -108,6 +108,7 @@ export default {
     }
   },
   mounted () {
+    window.vue = this
     let sid = '';
     if (localStorage.getItem('sid')) {
       sid = localStorage.getItem('sid')
